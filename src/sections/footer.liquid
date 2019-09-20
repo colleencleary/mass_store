@@ -1,0 +1,57 @@
+<footer>
+
+  {% if section.settings.show_payment_icons %}
+    {% unless shop.enabled_payment_types == empty %}
+      <span class="visually-hidden">{{ 'layout.footer.payment_methods' | t }}</span>
+      <ul class="payment-icons">
+        {% for type in shop.enabled_payment_types %}
+          <li>
+            {{ type | payment_type_svg_tag: class: 'icon' }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endunless %}
+  {% endif %}
+
+  {%- assign footer_linklist = section.settings.footer_linklist -%}
+  {% if linklists[footer_linklist].links.size > 0 %}
+    <ul>
+      {% for link in linklists[footer_linklist].links %}
+        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div>
+    <small>Fashion Sketch Template - &copy; {{ 'now' | date: "%Y" }} Designed by Tran Mau Tri Tam for Mass Impressions</small>
+  </div>
+  <div>
+    <form class="" action="index.html" method="post">
+      <input class="" id="email" type="email" placeholder="ENTER YOUR EMAIL HERE." required="required" >
+      <button type="submit" class="button">
+        <i class="fas fa-arrow-right"></i>
+      </button>
+    </form>
+  </div>
+</footer>
+
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "footer_linklist",
+        "label": "First menu",
+        "default": "footer"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_payment_icons",
+        "label": "Show payment icons",
+        "default": false
+      }
+    ]
+  }
+
+{% endschema %}

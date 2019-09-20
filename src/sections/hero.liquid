@@ -1,0 +1,111 @@
+<div class="c-hero__main">
+  <div class="c-hero__main-bg-container">
+    <img class="c-hero__main-bg" src="{{ section.settings.hero_bg | img_url: 'master' }}" alt="{{ section.settings.hero_bg.alt }}"/>
+  </div>
+
+  <div class="c-hero__maincontainer">
+    <div class="c-hero__subcontainer">
+      <div class="c-hero__text-container">
+        <div class="c-hero__text">
+          <h1>{{ section.settings.hero_text }}</h1>
+        </div>
+        <div class="c-hero__subtitle">
+          <h5>{{ section.settings.hero_subtitle }}</h5>
+        </div>
+
+        <button class="c-hero__shop-button"type="button" name="button">SHOP NOW</button>
+      </div>
+
+      <div class="c-hero__social-sidebar">
+
+        <hr>
+        {%- assign social_accounts = 'Facebook, Twitter, Pinterest, Instagram, Snapchat, Tumblr, YouTube, Vimeo,' | split: ', ' -%}
+        <ul>
+          {% for social in social_accounts %}
+            {%- assign social_handle = social | handleize -%}
+            {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
+            {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
+
+            {% if settings[social_link] != blank %}
+
+              <li>
+                <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">
+                  {% include social_icon %}
+                  <span class="icon-fallback-text">{{ social }}</span>
+                </a>
+              </li>
+            {% endif %}
+
+          {% endfor %}
+        </ul>
+
+        <hr>
+
+      </div>
+    </div>
+
+    <div class="c-hero__lower-container">
+      <div class="c-hero__lower-container-arrows">
+        <button class="c-hero__main-bg-arrow" type="button" name="button"><</button>
+        <button class="c-hero__main-bg-arrow" type="button" name="button">></button>
+      </div>
+      <div class="c-hero__lower-container-feature">
+        <div class="c-hero__feature-image-container">
+          <img class="c-hero__feature-image" src="{{ section.settings.hero_feature-image | img_url: 'master' }}" alt="{{ section.settings.hero_feature-image.alt }}"/>
+        </div>
+        <div class="c-hero__feature-text-container">
+          <h4>{{ section.settings.hero_feature-title }}</h4>
+          <p>{{ section.settings.hero_feature-subtitle }}</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
+{% schema %}
+  {
+    "name": "Hero",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "hero_bg",
+        "label": "Hero BG"
+      },
+      {
+        "type": "text",
+        "id": "hero_text",
+        "label": "Hero Text"
+      },
+      {
+        "type": "text",
+        "id": "hero_subtitle",
+        "label": "Hero Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "hero_feature-image",
+        "label": "Hero Feature Image"
+      },
+      {
+        "type": "text",
+        "id": "hero_feature-title",
+        "label": "Hero Feature Title"
+      },
+      {
+        "type": "text",
+        "id": "hero_feature-subtitle",
+        "label": "Hero Feature Subtitle"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Hero Section",
+        "category": "Home Sections"
+      }
+    ]
+  }
+{% endschema %}
